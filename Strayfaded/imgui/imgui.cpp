@@ -2479,7 +2479,7 @@ void ImGui::RenderCheckMark(ImVec2 pos, ImU32 col, float sz)
     window->DrawList->PathLineTo(ImVec2(bx + half - half / 2, by - half + half / 2));
     window->DrawList->PathLineTo(ImVec2(bx + half - half / 2, by + half - half / 2));
     window->DrawList->PathLineTo(ImVec2(bx - half + half / 2, by + half - half / 2));
-    window->DrawList->PathLineTo(ImVec2(bx - half + half / 2, by - half + half / 2 - thickness - thickness / 2 - 2));
+    window->DrawList->PathLineTo(ImVec2(bx - half + half / 2, by - half + half / 2 - thickness - thickness / 2));
     window->DrawList->PathStroke(col, false, thickness * 3);
 }
 
