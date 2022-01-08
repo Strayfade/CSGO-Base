@@ -21,14 +21,12 @@ bool init = false;
 bool ShowMenu = true;
 void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice)
 {
-    if (GetAsyncKeyState(MENU_KB))
-    {
-        ShowMenu = !ShowMenu;
-    }
+   if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Insert)))
+		ShowMenu = !ShowMenu;
+    
     if (!pDevice)
-    {
         pDevice = o_pDevice;
-    }
+    
     if (!init)
     {
         InitImGui(pDevice);
@@ -38,24 +36,21 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice)
     ImGui_ImplDX9_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
-    //ImGui::SetNextWindowPos(ImVec2(25, 25));
-    //ImGui::SetNextWindowSize(ImVec2(250, 250));
     
     ImGui::Begin("Example DX9 Multihack", &ShowMenu);
-    ImGui::Text("Test Window");
-    DrawFilledRect(0, 0, 20, 10, D3DCOLOR_ARGB(255, 255, 255, 255));
+    ImGui::Text("DX9 Multihack");
     ImGui::End();
 
     ImGui::EndFrame();
     ImGui::Render();
     ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
-    oEndScene(pDevice);
+    return oEndScene(pDevice);
 }
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT __stdcall WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
-    if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
         return true;
     return CallWindowProc(oWndProc, hWnd, uMsg, wParam, lParam);
 }
@@ -90,7 +85,7 @@ DWORD WINAPI MainThread(HMODULE hMod)
     // Loop
     while (!GetAsyncKeyState(UNINJECT_KB))
     {
-
+        Sleep(500); // Always sleep when you're in a "while" loop because you get 20% of cpu usage if you dont
     }
 
     // Unhook
@@ -109,9 +104,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
     {
     case DLL_PROCESS_ATTACH:
         StartThread(hModule, (LPTHREAD_START_ROUTINE)MainThread);
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:
+    default:
         break;
     }
     return TRUE;
