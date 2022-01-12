@@ -44,7 +44,7 @@ void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice)
     ImGui::EndFrame();
     ImGui::Render();
     ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
-    oEndScene(pDevice);
+    return oEndScene(pDevice);
 }
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
