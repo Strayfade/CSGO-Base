@@ -19,7 +19,7 @@ void InitImGui(LPDIRECT3DDEVICE9 pDevice)
 
 bool init = false;
 bool ShowMenu = true;
-void APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice)
+HRESULT APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice)
 {
    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Insert)))
 		ShowMenu = !ShowMenu;
