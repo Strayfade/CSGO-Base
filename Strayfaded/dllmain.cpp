@@ -20,10 +20,7 @@ void InitImGui(LPDIRECT3DDEVICE9 pDevice)
 bool init = false;
 bool ShowMenu = true;
 HRESULT APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice)
-{
-   if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Insert)))
-		ShowMenu = !ShowMenu;
-    
+{   
     if (!pDevice)
         pDevice = o_pDevice;
     
@@ -32,6 +29,9 @@ HRESULT APIENTRY hkEndScene(LPDIRECT3DDEVICE9 o_pDevice)
         InitImGui(pDevice);
         init = true;
     }
+
+    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Insert)))
+        ShowMenu = !ShowMenu;
 
     ImGui_ImplDX9_NewFrame();
     ImGui_ImplWin32_NewFrame();
